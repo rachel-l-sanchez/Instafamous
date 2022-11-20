@@ -22,6 +22,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -33,13 +35,10 @@ public class Post {
 		@Column(name = "id", unique = true, nullable = false)
 		private Long id;
 				
-		@NotEmpty(message = "Caption must not be blank")
-		@NotBlank
+
 		@Size(min = 3, message = "Length must be at least 3 characters")
 		private String caption;
-		
-		@NotBlank(message = "File name must not be blank")
-		@NotEmpty(message = "File name must not be empty")
+	
 		@Size(min=4, message = "File name is required")
 		private String imageURL;
 	  
@@ -60,7 +59,7 @@ public class Post {
 	       joinColumns = @JoinColumn(name = "post_id"), 
 	       inverseJoinColumns = @JoinColumn(name = "user_id")
 		)
-		private List<User> users;
+		private List<User> likes;
 
 
 		@ManyToOne(fetch = FetchType.LAZY)
@@ -68,12 +67,20 @@ public class Post {
 	    private User creator;
 		
 		
+		@ManyToMany(fetch = FetchType.LAZY)
+		@JoinTable(
+	       name = "usersposts", 
+	       joinColumns = @JoinColumn(name = "post_id"), 
+	       inverseJoinColumns = @JoinColumn(name = "user_id")
+		)
+		private List<User> usersPosting;
 
-
+		
 		public Post(Long id,
 				@NotEmpty(message = "Caption must not be blank") @NotBlank @Size(min = 3, message = "Length must be at least 3 characters") String caption,
 				@NotBlank(message = "File name must not be blank") @NotEmpty(message = "File name must not be empty") @Size(min = 4, message = "File name is required") String imageURL,
-				List<Comment> comments, Date createdAt, Date updatedAt, List<User> users, User creator) {
+				List<Comment> comments, Date createdAt, Date updatedAt, List<User> users, User creator,
+				List<User> usersPosting) {
 			super();
 			this.id = id;
 			this.caption = caption;
@@ -81,13 +88,27 @@ public class Post {
 			this.comments = comments;
 			this.createdAt = createdAt;
 			this.updatedAt = updatedAt;
-			this.users = users;
+			this.likes = users;
 			this.creator = creator;
+			this.usersPosting = usersPosting;
 		}
 
+		
 
 		public User getCreator() {
 			return creator;
+		}
+
+
+
+		public List<User> getUsersPosting() {
+			return usersPosting;
+		}
+
+
+
+		public void setUsersPosting(List<User> usersPosting) {
+			this.usersPosting = usersPosting;
 		}
 
 
@@ -193,15 +214,32 @@ public class Post {
 		}
 
 
-		public List<User> getUsers() {
-			return users;
+
+		public List<User> getLikes() {
+			return likes;
 		}
 
 
-		public void setUsers(List<User> users) {
-			this.users = users;
+
+		public void setLikes(List<User> likes) {
+			this.likes = likes;
 		}
-		
+
+
+
+		public void setUsers(List<User> likes) {
+			this.likes = likes;
+		}
+
+
+
+		public Post orElse(Object object) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+
+
 
 }
 

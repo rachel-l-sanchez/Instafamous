@@ -15,4 +15,7 @@ public interface FollowerRepository extends CrudRepository<Follower, Long> {
 	List<Follower> findAll();
 	Optional<Follower> findById(Long id);
 	String findByUsername(String username);
+	void deleteById(Long id);
+//	get all the follows of one user
+	List<Follower> findAllByFollowing(User user);
 }

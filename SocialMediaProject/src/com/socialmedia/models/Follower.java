@@ -33,7 +33,6 @@ public class Follower {
 	
 	private String username;
 	
-	private String password;
 	@Email
 	private String email;
 	@Transient
@@ -54,31 +53,17 @@ public class Follower {
 
 
 
-	public Follower(Long id, String name, String username, String password, @Email String email, String confirm,
+	public Follower(Long id, String name, String username,@Email String email, String confirm,
 			Date createdAt, Date updatedAt, List<User> following) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.username = username;
-		this.password = password;
 		this.email = email;
 		this.confirm = confirm;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 		this.following = following;
-	}
-
-
-
-
-	public String getPassword() {
-		return password;
-	}
-
-
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 
@@ -98,8 +83,6 @@ public class Follower {
 	public String getConfirm() {
 		return confirm;
 	}
-
-
 
 	public void setConfirm(String confirm) {
 		this.confirm = confirm;

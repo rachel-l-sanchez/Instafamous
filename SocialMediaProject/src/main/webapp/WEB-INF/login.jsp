@@ -20,25 +20,31 @@
     		<a href="/register" class="btn btn-primary active" aria-current="page">Register</a>
     	</div>
     </nav>
-    <h1>Login</h1>
-    <c:if test="${logoutMessage != null}">
-        <c:out value="${logoutMessage}"></c:out>
-    </c:if>
-    <c:if test="${errorMessage != null}">
-        <c:out value="${errorMessage}"></c:out>        
-    </c:if>
-    <form method="POST" "row g-3 d-flex justify-content-center" action="/login">
-    	
-	    <div class="col-md-6">
-	            <label for="username" for="inputEmail4" class="form-label">Username</label>
-	            <input type="text"  id="inputEmail4" id="username" class="form-control" name="username"/>
-	     </div>
-	     <div class="col-md-6">
-	            <label for="password" for="inputPassword4 class="form-label">Password</label>
-	            <input type="password"  id="inputPassword4" class="form-control" id="password" name="password"/>
-	     </div>
-	     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-	     <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+   	<div class="row">
+   	    <h1>Login</h1>
+	    <c:if test="${logoutMessage != null}">
+	        <c:out value="${logoutMessage}"></c:out>
+	    </c:if>
+	    <c:if test="${errorMessage != null}">
+	        <c:out value="${errorMessage}"></c:out>        
+	    </c:if>
+	    <form method="POST" "col g-3 d-flex justify-content-center" action="/login">
+	    	
+		    <div class="col">
+		            <label for="username" for="inputEmail4" class="form-label">Username</label>
+		            <input type="text"  id="inputEmail4" id="username" class="form-control" name="username"/>
+		     </div>
+		     <div class="col">
+		            <label for="password" for="inputPassword4 class="form-label">Password</label>
+		            <input type="password"  id="inputPassword4" class="form-control" id="password" name="password"/>
+		     </div>
+		     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		     <button type="submit" class="btn btn-primary">Login</button>
+	    </form>
+   	
+   	
+   	
+   	</div>
+
 </body>
 </html>

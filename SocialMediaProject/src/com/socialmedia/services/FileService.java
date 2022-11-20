@@ -19,6 +19,7 @@ import com.socialmedia.validators.MultipartConverter;
 @Service
 public class FileService implements WebMvcConfigurer {
 	private final java.nio.file.Path root = Paths.get("uploads");
+
 	
 	public void init() throws IOException {
 		if (! Files.exists(root)) {
@@ -59,4 +60,6 @@ public class FileService implements WebMvcConfigurer {
     public void addFormatters(FormatterRegistry registry) {
          registry.addConverter(new MultipartConverter());
      }
+
+    
 }

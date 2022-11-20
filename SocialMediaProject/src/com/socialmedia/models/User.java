@@ -72,12 +72,22 @@ public class User {
 	@OneToMany(mappedBy="creator", fetch = FetchType.LAZY)
     private List<Post> createdPosts;
 
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+       name = "usersposts", 
+       joinColumns = @JoinColumn(name = "user_id"), 
+       inverseJoinColumns = @JoinColumn(name = "post_id")
+	)
+	private List<Post> postedPosts;
+
+
 
 
 
 	public User(Long id, String name, String username, String password, @Email String email, String confirm,
 			Date createdAt, Date updatedAt, List<Role> roles, String filePath, List<Follower> followers,
-			List<Post> likes, List<Comment> comments, List<Post> createdPosts) {
+			List<Post> likes, List<Comment> comments, List<Post> createdPosts, List<Post> postedPosts) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -93,7 +103,23 @@ public class User {
 		this.likes = likes;
 		this.comments = comments;
 		this.createdPosts = createdPosts;
+		this.postedPosts = postedPosts;
 	}
+
+
+	public List<Post> getPostedPosts() {
+		return postedPosts;
+	}
+
+
+
+
+
+	public void setPostedPosts(List<Post> postedPosts) {
+		this.postedPosts = postedPosts;
+	}
+
+
 
 
 

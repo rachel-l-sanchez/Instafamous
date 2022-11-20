@@ -11,6 +11,7 @@
 	<title>Registration Page</title>
 	<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="/css/main.css">
 	
 </head>
 <body>
@@ -23,25 +24,25 @@
 	</nav>
     <p><form:errors path="user.*"/></p>
     
-    <form:form method="POST" class = "form d-flex flex-column" action="/register" modelAttribute="user">
+    <form:form method="POST" class = "form row d-flex flex-column" action="/register" modelAttribute="user">
        <h1>Register</h1> 
-        <div class="col-md-6">
+        <div class="col">
             <form:label for ="inputUsername4" class="form-label" path="name">Name:</form:label>
             <form:input class="form-control"  id ="inputName4" path="name"/>
         </div>
-        <div class="col-md-6">
+        <div class="col">
             <form:label for ="inputUsername4" class="form-label" path="username">Username:</form:label>
             <form:input class="form-control"  id ="inputUsername4" path="username"/>
         </div>
-      	<div class="col-md-6">
+      	<div class="col">
             <form:label for="inputEmail4" class="form-label" path="email">Email</form:label>
             <form:input class="form-control" id="inputEmail4" path="email"/>
         </div>
-      	<div class="col-md-6">
+      	<div class="col">
             <form:label  class="form-label" path="password">Password:</form:label>
             <form:password class="form-control" id="inputPassword4" path="password"/>
         </div>
-      	<div class="col-md-6">
+      	<div class="col">
             <form:label  class="form-label" path="confirm">Password Confirmation:</form:label>
             <form:password class="form-control" id="inputPassword4" path="confirm"/>
         </div>

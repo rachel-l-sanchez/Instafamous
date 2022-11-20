@@ -1,21 +1,29 @@
 package com.socialmedia.services;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Slice;
+
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.socialmedia.models.Comment;
 import com.socialmedia.models.Post;
 import com.socialmedia.models.User;
 import com.socialmedia.repositories.CommentRepository;
 import com.socialmedia.repositories.PostRepository;
+import com.socialmedia.repositories.UserRepository;
 
 @Service
 @Transactional
@@ -25,8 +33,9 @@ public class PostService {
 	
 	@Autowired 
 	private CommentRepository cRepo;
+
 	
-	private static final int numPages = 5;
+	private static final int PAGE_SIZE = 6;
 	
 	public PostService() {
 		
@@ -81,16 +90,46 @@ public class PostService {
 	}
 	
 	public List<Post> getAll(User user) {
-		return pRepo.findAllByUsers(user);
+		return pRepo.findAllByLikes(user);
 	}
 	
-	public Page<Post> postsPerPage(int pageNumber) {
-		PageRequest pageRequest = PageRequest.of(pageNumber ,numPages, Sort.Direction.ASC, "createdAt");
-		Page<Post> posts = pRepo.findAll(pageRequest);
-		return pRepo.findAll(pageRequest);
+	public int getLikes(Post post) {
+		return post.getLikes().size();
 	}
 	
 
 	
+	public List<Post> findByUsersPosting(User user) {
+		if (user != null) {
+			return  pRepo.findByUsersPostingNotContains(user);
+		}
+		else {
+			return null;
+		}
+	
+
+	}
+	
+
+	public Object validatePost(Post post, BindingResult result) {
+
+		if (post.getCaption().equals("")) {
+			result.rejectValue("caption","completed", "Caption is blank");
+		} if (post.getImageURL().equals("")) {
+			result.rejectValue("imageURL", "completed", "Image not uploaded");
+		} if (result.hasErrors()) {
+			return null;
+		}
+	
+		return result;
+	
+	}
+	
+	public Page<Post> postsPerPage(int pageNumber) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, PAGE_SIZE, Sort.Direction.DESC, "createdAt");
+        Page<Post> posts = pRepo.findAll(pageRequest);
+        return pRepo.findAll(pageRequest);
+    }
 	
 }
+	
