@@ -32,7 +32,6 @@ public class UserService {
 	private static final int numPages = 5;
 	
 
-
 	public UserService(UserRepository uRepo, RoleRepository rRepo, BCryptPasswordEncoder bCryptPasswordEncoder) {
 		super();
 		this.uRepo = uRepo;
@@ -61,14 +60,6 @@ public class UserService {
 		return uRepo.save(u);
 	}
 
-	public List<User> find() {
-		return uRepo.findAll();
-	}
-	
-//	find all the users that another user follows
-	public List<User> findAllBy(User followingUser) {
-		return uRepo.findAllByFollowers(followingUser);
-	}
 	
 	public User findById(Long id) {
 		Optional<User> user =uRepo.findById(id);
@@ -112,7 +103,14 @@ public class UserService {
 		return result;
 	
 	}
-
+	
+	
+	public User createFollower(Follower follower, User user) {
+	    user.getFollowers().add(follower);
+		return uRepo.save(user);
+	}
+	
+	
 }
 	
 

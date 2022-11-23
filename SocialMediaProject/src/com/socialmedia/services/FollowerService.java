@@ -20,12 +20,7 @@ public class FollowerService {
 	@Autowired
 	private UserRepository uRepo;
 	
-	public List<Follower> find() {
-		return followRepo.findAll();
-		
-	}
 
-	
 	public Follower findById(Long id) {
 		Optional<Follower> follower =followRepo.findById(id);
 		if (follower.isPresent()) {
@@ -34,23 +29,34 @@ public class FollowerService {
 		return null;
 		
 	}
+
 	
-	public Follower createFollower(Follower follower, User user) {
-	    user.getFollowers().add(follower);
-	    follower.getFollowing().add(user);
+	public Follower createFollowing(Follower follower, User user) {
+
+		follower.getFollowing().add(user);
 		return followRepo.save(follower);
 	}
 	
 	public void removeFollower(User user, Follower follower) {
 		// TODO Auto-generated method stub
 		user.getFollowers().remove(follower);
-		followRepo.deleteById(follower.getId());
 
 	}
-//	find all the followers of one particular user
-//	using the many to many relationship
+	
+	public Follower addFollower(User user, Follower follower) {
+		// TODO Auto-generated method stub
+		follower.addFollower(user);
+		follower.getFollowing().add(user);
+		return followRepo.save(follower);
+	}
+
+	
+	public Follower create(Follower follower) {
+		return followRepo.save(follower);
+	}
+	
 	public List<Follower> findAllByFollowing(User user) {
 		return followRepo.findAllByFollowing(user);
-		
 	}
+	
 }

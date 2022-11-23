@@ -107,20 +107,20 @@ public class UserController {
 	
 	@PostMapping("/add/follower/{id}")
 	public String createFollower(@ModelAttribute("newFollower") Follower newFollower,
-			@Param("followUsername") String followUsername, 
 			@PathVariable("id") Long user_id, @ModelAttribute("user") User user,
 			Principal principal, Model model,
-			@RequestParam(defaultValue = "1") int pageNumber) {
+			@RequestParam(defaultValue = "1") int pageNumber, HttpSession session){
 		
 		String username = principal.getName();
 		User currentUser = uService.findByUsername(username);
-		User oneUser = uService.findByUsername(followUsername);
-		if (followService.findById(currentUser.getId()) != null) {
-			Follower follower = followService.findById(currentUser.getId());
+		User oneUser = uService.findById(user_id);
+
+			Follower follower = new Follower();
 			follower.setUsername(currentUser.getUsername());
 			follower.setName(currentUser.getName());
-			followService.createFollower(followService.findById(currentUser.getId()), oneUser);
-		}
+			followService.create(follower);	
+			uService.createFollower(follower, oneUser);
+			followService.addFollower(oneUser, follower);
 		return "redirect:/dashboard/" + pageNumber;
 	}
 
@@ -129,8 +129,8 @@ public class UserController {
 			Principal principal, HttpSession session, @RequestParam(defaultValue = "1") int pageNumber) {
 		String username = principal.getName();
 		User currentUser = uService.findByUsername(username);
-		Long user_id = (Long) session.getAttribute("user_id");
-		User oneUser = uService.findById(user_id);
+		String otherUsername = (String) session.getAttribute("username");
+		User oneUser = uService.findByUsername(otherUsername);
 		if (followService.findById(currentUser.getId()) != null) {
 			Follower follower = followService.findById(currentUser.getId());
 			followService.removeFollower(oneUser, follower);

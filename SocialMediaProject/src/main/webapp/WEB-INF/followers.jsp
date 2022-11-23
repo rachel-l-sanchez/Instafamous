@@ -16,21 +16,26 @@
 <body>
 <jsp:include page="base.jsp" />
 <c:forEach var="follow" items = "${followers}">
-<div class="row">
-  <div class="col">
-    <div id="simple-list-example" class="d-flex flex-column gap-2 simple-list-example-scrollspy text-center">
-      <a class="p-1 rounded" href="/profile/${follow.id}"><c:out value="${follow.name }"/></a>
-    </div>
-  </div>
-  <div class="col">
-    <div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
-      <h4 id="simple-list-item-1"><c:out value="${follow.username}"/></h4>
-      	<c:if test="${follow.following.size() == 0}">
-			<p class="card-text"><c:out value="${follow.following.size()}"/></p>
-		</c:if>
-    </div>
-  </div>
- </div>
+   <c:choose>
+   		<c:when test="${follow.name == null}"> 
+   			<p>You have 0 Followers</p>   
+   		</c:when>
+		<c:otherwise>	
+			<div class="d-inline-flex flex-row row justify-content-center">
+					<div class="card col d-flex flex-row" style="width: 18rem;">
+					  <img src="../userImage.png"  class="card-img-top" alt="user icon">
+					  	<div class="card-body">
+						    <h5 class="card-title">
+						    	<a class="p-1 rounded" href="/profile/${follow.id}"><c:out value="${follow.name }"/></a>
+						    </h5>
+						    <p class="card-text">
+						    	<c:out value="${follow.username}"/>
+							</p>
+						</div>
+					</div> 
+				</div>  
+		</c:otherwise>
+  </c:choose>
 </c:forEach>
 </body>
 </html>

@@ -97,11 +97,10 @@ public class PostController {
 	        String currentUsername = principal.getName();
 	        model.addAttribute("currentUser", uService.findByUsername(currentUsername));
 //	        get the user being followed
-	        if ((Long) session.getAttribute("user_id") != null) {
-	        	Long user_id = (Long) session.getAttribute("user_id");
-	        	User otherUser = uService.findById(user_id);
+	        	String otherUsername = (String) session.getAttribute("username");
+	        	User otherUser = uService.findByUsername(otherUsername);
 	        	model.addAttribute("followingUser", otherUser);
-	        }
+	        
 //	        show all comments for one individual post
 			model.addAttribute("allComments", cService.findAllByPost(onePost));
 			

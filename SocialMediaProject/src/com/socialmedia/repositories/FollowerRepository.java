@@ -12,10 +12,9 @@ import com.socialmedia.models.User;
 @Repository
 public interface FollowerRepository extends CrudRepository<Follower, Long> {
 	Follower save(User user);
-	List<Follower> findAll();
 	Optional<Follower> findById(Long id);
-	String findByUsername(String username);
 	void deleteById(Long id);
 //	get all the follows of one user
 	List<Follower> findAllByFollowing(User user);
+	
 }

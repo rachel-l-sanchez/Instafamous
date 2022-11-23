@@ -1,12 +1,12 @@
 package com.socialmedia.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,8 +18,6 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "followers")
@@ -43,18 +41,20 @@ public class Follower {
     private Date createdAt;
     private Date updatedAt;
     
-    @ManyToMany
-	private List<User> following; 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "followers_users", 
+            joinColumns = @JoinColumn(name = "follower_id"), 
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private List<User> following = new ArrayList<>();
 
 	public Follower() {
 		
 	}
 
 
-
-
-	public Follower(Long id, String name, String username,@Email String email, String confirm,
-			Date createdAt, Date updatedAt, List<User> following) {
+	public Follower(Long id, String name, String username, @Email String email, String confirm, Date createdAt,
+			Date updatedAt, List<User> following) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -65,6 +65,7 @@ public class Follower {
 		this.updatedAt = updatedAt;
 		this.following = following;
 	}
+
 
 
 
@@ -95,14 +96,15 @@ public class Follower {
 	}
 
 
-
-
 	public void setFollowing(List<User> following) {
 		this.following = following;
 	}
 
 
-
+	public void addFollower(User user) {
+	
+		following.add(user);
+	}
 
 	public Long getId() {
 		return id;

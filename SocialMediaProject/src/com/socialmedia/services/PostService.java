@@ -119,7 +119,7 @@ public class PostService {
 			result.rejectValue("imageURL", "completed", "Image not uploaded");
 		} if (result.hasErrors()) {
 			return null;
-		}
+		} 
 	
 		return result;
 	

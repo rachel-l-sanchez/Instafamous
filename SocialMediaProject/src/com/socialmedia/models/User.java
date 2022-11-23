@@ -1,5 +1,6 @@
 package com.socialmedia.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,8 +54,12 @@ public class User {
     private String filePath = "";
     
 
-	@ManyToMany(mappedBy="following")
-	private List<Follower> followers; 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "followers_users", 
+            joinColumns = @JoinColumn(name = "user_id"), 
+            inverseJoinColumns = @JoinColumn(name = "follower_id"))
+	private List<Follower> followers = new ArrayList<>(); 
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
@@ -80,9 +85,6 @@ public class User {
        inverseJoinColumns = @JoinColumn(name = "post_id")
 	)
 	private List<Post> postedPosts;
-
-
-
 
 
 	public User(Long id, String name, String username, String password, @Email String email, String confirm,
@@ -112,33 +114,18 @@ public class User {
 	}
 
 
-
-
-
 	public void setPostedPosts(List<Post> postedPosts) {
 		this.postedPosts = postedPosts;
 	}
-
-
-
 
 
 	public List<Post> getCreatedPosts() {
 		return createdPosts;
 	}
 
-
-
-
-
-
 	public void setCreatedPosts(List<Post> createdPosts) {
 		this.createdPosts = createdPosts;
 	}
-
-
-
-
 
 
 	public User() {

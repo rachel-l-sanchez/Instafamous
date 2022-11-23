@@ -40,7 +40,7 @@ public class WebSecurityConfig{
 	        .formLogin()
 	            .loginPage("/login")
 	            .defaultSuccessUrl("/dashboard/1")
-	            .failureUrl("/error")
+	            .failureUrl("/login")
 	            .permitAll()
 	            .and()
 	        .logout()

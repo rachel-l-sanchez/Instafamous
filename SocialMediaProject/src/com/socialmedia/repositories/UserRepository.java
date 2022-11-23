@@ -19,7 +19,6 @@ import com.socialmedia.models.User;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 	User save(User user);
-	List<User> findAll();
 	Optional<User> findByEmail(String email);
 	Optional<User> findById(Long id);
 	String findByName(String name);

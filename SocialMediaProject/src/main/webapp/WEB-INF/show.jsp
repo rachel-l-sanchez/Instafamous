@@ -17,6 +17,7 @@
 	<nav class="navbar navbar-dark bg-dark row">
 		<jsp:include page="base.jsp" />
 	</nav>
+	
 	<div class="row">
 		<c:set var = "user" value = "${followingUser}"/>
 		<c:choose>
@@ -28,7 +29,6 @@
 		</c:otherwise>
 		</c:choose>
 	</div>
-	
 	<div class="accordion row" id="accordionExample">
 	  <div class="accordion-item col">
 	    <h2 class="accordion-header" id="headingOne">
@@ -68,6 +68,9 @@
 		        <div class="mb-3">
 		        	<form:input type="hidden" path="email" value="${currentUser.email}"/>
 		      	</div>
+		      	<div class="mb-3">
+		        	<form:input type="hidden" path="id" value="${currentUser.id}"/>
+		      	</div>
 				<button class ="btn btn-primary">Follow User</button>
 			</form:form>
 			<form:form class="delete form d-inline-block h-25 w-75 p-3" action = "/unfollow" method="POST" modelAttribute="followerInDB">
@@ -105,6 +108,6 @@
 				<form:textarea path="content" class="form-control" cols="20" rows="2"></form:textarea>
 			</div>
 			<button class ="btn btn-primary">Comment</button>
-		</form:form>
+		</form:form>	
 </body>
 </html>
