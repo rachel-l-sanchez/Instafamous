@@ -1,13 +1,12 @@
 package com.socialmedia.services;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -27,11 +26,13 @@ public class UserService {
 	
 	private RoleRepository rRepo;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	    
- 
+	private static final long EXPIRE_TOKEN_AFTER_MINUTES = 30;
+
+
 	private static final int numPages = 5;
 	
 
+	
 	public UserService(UserRepository uRepo, RoleRepository rRepo, BCryptPasswordEncoder bCryptPasswordEncoder) {
 		super();
 		this.uRepo = uRepo;
@@ -111,6 +112,65 @@ public class UserService {
 	}
 	
 	
+	public String forgotPassword(String email) {
+		Optional<User> userOptional =Optional
+				.ofNullable(uRepo.findByEmail(email));
+
+		if (!userOptional.isPresent()) {
+			return "Invalid email id.";
+		}
+
+		User user = userOptional.get();
+		user.setToken(generateToken());
+		user.setTokenCreationDate(LocalDateTime.now());
+
+		user = uRepo.save(user);
+
+		return user.getToken();
+	}
+
+	public String resetPassword(String token, String password) {
+
+		Optional<User> userOptional;
+		userOptional = Optional
+				.ofNullable(uRepo.findByToken(token));
+
+		if (!userOptional.isPresent()) {
+			return "Invalid token.";
+		}
+
+		LocalDateTime tokenCreationDate = userOptional.get().getTokenCreationDate();
+
+		if (isTokenExpired(tokenCreationDate)) {
+			return "Token expired.";
+
+		}
+
+		User user = userOptional.get();
+
+		user.setPassword(password);
+		user.setToken(null);
+		user.setTokenCreationDate(null);
+
+		uRepo.save(user);
+
+		return "Your password successfully updated.";
+	}
+
+	private String generateToken() {
+		StringBuilder token = new StringBuilder();
+
+		return token.append(UUID.randomUUID().toString())
+				.append(UUID.randomUUID().toString()).toString();
+	}
+
+	private boolean isTokenExpired(final LocalDateTime tokenCreationDate) {
+
+		LocalDateTime now = LocalDateTime.now();
+		Duration diff = Duration.between(tokenCreationDate, now);
+
+		return diff.toMinutes() >= EXPIRE_TOKEN_AFTER_MINUTES;
+	}
 }
 	
 

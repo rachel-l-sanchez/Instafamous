@@ -1,5 +1,6 @@
 package com.socialmedia.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +34,7 @@ public class User {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 	private String name;
+	private String token;
     private String username;
     private String password;
     @Email
@@ -42,7 +44,8 @@ public class User {
     @Column(updatable=false)
     private Date createdAt;
     private Date updatedAt;
-    
+    @Column(columnDefinition = "TIMESTAMP")
+	private LocalDateTime tokenCreationDate;
     
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -87,18 +90,24 @@ public class User {
 	private List<Post> postedPosts;
 
 
-	public User(Long id, String name, String username, String password, @Email String email, String confirm,
-			Date createdAt, Date updatedAt, List<Role> roles, String filePath, List<Follower> followers,
-			List<Post> likes, List<Comment> comments, List<Post> createdPosts, List<Post> postedPosts) {
+
+
+
+	public User(Long id, String name, String token, String username, String password, @Email String email,
+			String confirm, Date createdAt, Date updatedAt, LocalDateTime tokenCreationDate, List<Role> roles,
+			String filePath, List<Follower> followers, List<Post> likes, List<Comment> comments,
+			List<Post> createdPosts, List<Post> postedPosts) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.token = token;
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.confirm = confirm;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		this.tokenCreationDate = tokenCreationDate;
 		this.roles = roles;
 		this.filePath = filePath;
 		this.followers = followers;
@@ -106,6 +115,16 @@ public class User {
 		this.comments = comments;
 		this.createdPosts = createdPosts;
 		this.postedPosts = postedPosts;
+	}
+
+
+	public String getToken() {
+		return token;
+	}
+
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 
@@ -282,6 +301,16 @@ public class User {
 
 	public void setFollowers(List<Follower> followers) {
 		this.followers = followers;
+	}
+
+
+	public LocalDateTime getTokenCreationDate() {
+		return tokenCreationDate;
+	}
+
+
+	public void setTokenCreationDate(LocalDateTime tokenCreationDate) {
+		this.tokenCreationDate = tokenCreationDate;
 	}
 
 	

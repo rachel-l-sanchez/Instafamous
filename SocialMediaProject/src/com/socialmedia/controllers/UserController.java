@@ -7,6 +7,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -145,23 +148,22 @@ public class UserController {
 		return "settings.jsp";
 	}
 	
-	@PutMapping("update/settings/{id}")
-	public String changeSettings(@Valid @ModelAttribute("user") User user, BindingResult result, 
-			@RequestParam(defaultValue = "1") int pageNumber, 
-			@PathVariable("id") Long id) {
-		
-		uService.validateUpdate(user, result);
-		
-		if (result.hasErrors()) {
-			return "settings.jsp";
+	@PostMapping("/forgot-password")
+	public String forgotPassword(@RequestParam String email) {
+
+		String response = uService.forgotPassword(email);
+
+		if (!response.startsWith("Invalid")) {
+			response = "http://localhost:8080/reset-password?token=" + response;
 		}
-		user.setName(user.getName());
-		user.setEmail(user.getEmail());
-		user.setPassword(user.getPassword());
-		user.setUsername(user.getUsername());
-		uService.updateOne(user);
-		return "redirect:/dashboard/" + pageNumber;
-		
+		return response;
+	}
+
+	@PutMapping("/reset-password")
+	public String resetPassword(@RequestParam String token,
+			@RequestParam String password) {
+
+		return uService.resetPassword(token, password);
 	}
 	
 	@GetMapping("my/followers")

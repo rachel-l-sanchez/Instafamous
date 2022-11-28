@@ -19,13 +19,14 @@ import com.socialmedia.models.User;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 	User save(User user);
-	Optional<User> findByEmail(String email);
+	User findByEmail(String email);
 	Optional<User> findById(Long id);
 	String findByName(String name);
 	List<User> findAllByFollowers(User follower);
 	User findByUsername(String username);
 	List<User> findAllByLikes(Post post);
 	List<User> findAllByFollowers(Follower follower);
+	User findByToken(String token);
 
 
 }

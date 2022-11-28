@@ -21,7 +21,7 @@
     	<h2>Newsfeed</h2>
     	<div class="btn-group bg-light row-col-12">
 			<a href="/dashboard/1" class="btn btn-light active" aria-current="page">Newsfeed</a>
-			<a href="/settings/${currentUser.id}" class="btn btn-light">Update Your Account</a>
+			<a href="/settings/${currentUser.id}" class="btn btn-light">Reset Password</a>
 			<a href="/profile/${currentUser.id }" class="btn btn-light">Your Profile</a>
 			<a href="/create" class="btn btn-light">Upload a New Post</a>
 			<a href="../my/followers" class="btn btn-light">See Your Followers</a>

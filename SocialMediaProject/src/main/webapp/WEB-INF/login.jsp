@@ -28,22 +28,31 @@
 	    <c:if test="${errorMessage != null}">
 	        <c:out value="${errorMessage}"></c:out>        
 	    </c:if>
-	    <form method="POST" "col g-3 d-flex justify-content-center" action="/login">
-	    	
-		    <div class="col">
-		            <label for="username" for="inputEmail4" class="form-label">Username</label>
-		            <input type="text"  id="inputEmail4" id="username" class="form-control" name="username"/>
-		     </div>
-		     <div class="col">
-		            <label for="password" for="inputPassword4 class="form-label">Password</label>
-		            <input type="password"  id="inputPassword4" class="form-control" id="password" name="password"/>
-		     </div>
-		     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-		     <button type="submit" class="btn btn-primary">Login</button>
-	    </form>
-   	
-   	
-   	
+	    <div class="row d-flex flex-column">
+		    <form method="POST" class="col pb-3 g-3 d-flex flex-column justify-content-center" action="/login">
+		    	
+			    <div class="col">
+			            <label for="username" for="inputEmail4" class="form-label">Username</label>
+			            <input type="text"  id="inputEmail4" id="username" class="form-control" name="username"/>
+			     </div>
+			     <div class="col">
+			            <label for="password" for="inputPassword4 class="form-label">Password</label>
+			            <input type="password"  id="inputPassword4" class="form-control" id="password" name="password"/>
+			     </div>
+			     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			     <button type="submit" class="btn btn-primary">Login</button>
+		    </form>
+		    
+		   	<form method="POST" class="col pt-3 g-3 d-flex flex-column justify-content-center" action="/forgot-password">
+		    	<h3>Forgot Password?</h3>
+			    <div class="col">
+			            <label for="email" for="inputEmail4" class="form-label">Email</label>
+			            <input type="text"  id="inputEmail4" id="email" class="form-control" name="email"/>
+			     </div>
+			     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			     <button type="submit" class="btn btn-primary">Submit</button>
+		    </form>
+   		</div>
    	</div>
 
 </body>
