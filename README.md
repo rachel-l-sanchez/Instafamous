@@ -1,17 +1,15 @@
 <h1>Social Media App with Java</h1>
 
 <h2>Dashboard User Interface </h2>
-<img src="dashboard.png"
-  alt="dashboard"
-  title="Optional title"
-  style="display: inline-block; margin: 0 auto; max-width: 300px">
-  
+
+![dashboard](https://github.com/rachel-l-sanchez/SocialMediaApp/blob/main/Img_components/Screen%20Shot%202022-11-21%20at%2011.26.21%20AM.png)
+
+
 <h2>Upload Form with Validations </h2>
-<img
-  src="../Img_components/create.png"
-  alt="create form"
-  title="Optional title"
-  style="display: inline-block; margin: 0 auto; max-width: 300px">
+
+   ![create](https://github.com/rachel-l-sanchez/SocialMediaApp/blob/main/Img_components/create.png)
+
+
   
   
   <h2>Features</h2>
