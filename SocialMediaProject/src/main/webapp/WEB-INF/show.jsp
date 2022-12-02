@@ -22,7 +22,7 @@
 		<c:set var = "user" value = "${followingUser}"/>
 		<c:choose>
 		<c:when test="${followingUser.username != null}">
-			<h2 class="col"><a href="/profile/${followingUser.id}"><c:out value="${followingUser.username}"/>'s</a>< Post</h2>
+			<h2 class="col"><a href="/profile/${followingUser.id}"><c:out value="${followingUser.username}"/>'s Post</h2>
 		</c:when>
 		<c:otherwise>
 			<h2 class="col"><a href="/profile/${currentUser.id}"><c:out value="${currentUser.name}"/>'s Post</a></h2>
