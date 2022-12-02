@@ -1,1 +1,1 @@
-<h1>Social Media App with Django</h1>
+<h1>Social Media App with Java</h1>
