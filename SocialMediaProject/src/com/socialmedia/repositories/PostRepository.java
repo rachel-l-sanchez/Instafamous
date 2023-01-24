@@ -27,5 +27,4 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long>, 
 	List<Post> findAllByLikes(User user);
 	List<Post> findByUsersPostingNotContains(User user);
 	Post findByImageURLAndCaption(String imageURL, String caption);
-
 }

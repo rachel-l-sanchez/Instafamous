@@ -131,5 +131,14 @@ public class PostService {
         return pRepo.findAll(pageRequest);
     }
 	
+	public Post updateOne(Post post) {
+		return pRepo.save(post);
+	}
+	
+	public void destroy(Long id) {
+		System.out.println(id);
+		pRepo.deleteById(id);
+	}
+	
 }
 	

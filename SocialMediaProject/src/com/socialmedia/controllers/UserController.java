@@ -58,13 +58,13 @@ public class UserController {
 	        return "login.jsp";
 	    }
 	 
-	 @GetMapping("/error")
-	 public String error(@RequestParam(value="error", required=false) String error, @RequestParam(value="logout", required=false) String logout, Model model, @ModelAttribute("user") User user,BindingResult result) {
-	        if(error != null) {
-	            model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
-	        }
-	        return "login.jsp";
-	    }
+//	 @GetMapping("/error")
+//	 public String error(@RequestParam(value="error", required=false) String error, @RequestParam(value="logout", required=false) String logout, Model model, @ModelAttribute("user") User user,BindingResult result) {
+//	        if(error != null) {
+//	            model.addAttribute("errorMessage", "Invalid Credentials, Please try again.");
+//	        }
+//	        return "login.jsp";
+//	    }
 	
 		
 	 @PostMapping("/login")

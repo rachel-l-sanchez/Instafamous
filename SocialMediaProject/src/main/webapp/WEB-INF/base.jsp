@@ -24,6 +24,7 @@
 			<a href="/settings/${currentUser.id}" class="btn btn-light">Reset Password</a>
 			<a href="/profile/${currentUser.id }" class="btn btn-light">Your Profile</a>
 			<a href="/create" class="btn btn-light">Upload a New Post</a>
+			<a href="/edit/1" class="btn btn-light active">Edit Post</a>
 			<a href="../my/followers" class="btn btn-light">See Your Followers</a>
 			<a href="/following" class="btn btn-light">Following</a>
 			<a class="btn btn-light row-col-12"><form id="logoutForm" method="POST" action="/logout">

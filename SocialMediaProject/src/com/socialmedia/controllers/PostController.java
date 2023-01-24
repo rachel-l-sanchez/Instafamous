@@ -1,7 +1,10 @@
 package com.socialmedia.controllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -165,8 +170,6 @@ public class PostController {
 			String currentUsername = principal.getName(); 
 			model.addAttribute("likes",post.getLikes());
 			model.addAttribute("currentUser",uService.findByUsername(currentUsername));
-			model.addAttribute("oneUser",uService.findByUsername(username));
-
 //			adding pagination to app of user posts
 			Page<Post> posts = pService.postsPerPage(pageNumber - 1);
 		    model.addAttribute("totalPages", posts.getTotalPages());
@@ -174,10 +177,41 @@ public class PostController {
 			return "dashboard.jsp";
 			}
 		
+		@GetMapping("/edit/{id}")
+		public String editPost(@PathVariable("id") Long postId, Principal principal, Model model,HttpSession session, @ModelAttribute("post") Post post, BindingResult result) {
+			model.addAttribute("post", post);
+			model.addAttribute("onePost", pService.findById(postId));
+			session.setAttribute("loggedId", uService.findByUsername(principal.getName()));
+			model.addAttribute("user", uService.findByUsername(principal.getName()));
+			return "edit.jsp";
+			}
 		
+		@PutMapping("update/post/{id}")
+		public String updateExpense(@Valid @ModelAttribute("post") Post post, BindingResult result, @PathVariable("id") Long id) {
+			
+			if (result.hasErrors()) {
+				return "edit.jsp";
+			} else {
+				pService.updateOne(post);
+				return "redirect:/create";
+			}
+		}
 		
-		
+		@RequestMapping(value="/delete/{id}")
+	    public String destroy(@PathVariable("id") Long id, @ModelAttribute("post") Post post) {
+			Post postToDelete = pService.findById(id);
+			String imagePath = postToDelete.getImageURL();
+			Path filetoDelete = Paths.get(imagePath);
+			try {
+				pService.destroy(id);
+				Files.delete(filetoDelete);
 
+			} catch (IOException e) {
+					System.out.println("No such file exists");
+			}
+	        return "redirect:/create";
+	    }
+		
 		
 
 }
