@@ -1,4 +1,8 @@
-<h1>Social Media App with Java</h1>
+<h1>Instafamous</h1>
+
+## Overview
+
+A social media app like Instagram with various functionalities built in Java
 
 <h2>Dashboard User Interface </h2>
 
@@ -27,8 +31,33 @@
     <li>View Your Followers</li>
   </ul>
   
+  ## File Upload Controller
+  
+  ```
+  @Controller
+public class FileController {
+	
+	@Autowired
+	private FileService fService;
+	
+	@GetMapping("uploads/{filename:.+}")
+	@ResponseBody
+	public ResponseEntity<Resource> getfile(@PathVariable String filename) {
+		Resource file = fService.load(filename);
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment: filename=\"" + file.getFilename() + "\"").body(file); 
+	}
+}
+```
+  
   <h2>How it Works</h2>
   The client side browser sends a request to the controller present on the server. It is then the controller that invokes the model to retrieve the data to respond to the request. The controller then sends the data to the view which the view renders. View is sent back to the browser to display. The model is what defines the business logic. 
+  
+  ## Running the Project
+   1. git clone https://github.com/rachel-l-sanchez/SocialMediaApp.git
+   2. Spring Tool Suite: Run as Spring Boot App
+   
+  ## Collaborators
+  1. Rachel Sanchez
 
 
 
